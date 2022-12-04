@@ -1,19 +1,17 @@
-import { User } from "../App";
+import { useContext } from "react";
+import { ChatContext, User } from "../App";
 
-interface TabsProps {
-  users: User[];
-  currentUser: User | null;
-  setCurrentUser: (user: User) => void;
-}
-const Tabs = (props: TabsProps) => {
+const Tabs = () => {
+  const chatContext = useContext(ChatContext);
+
   return (
     <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
       <ul className="flex flex-wrap -mb-px">
-        {props.users.map((user) => {
+        {chatContext?.users?.map((user) => {
           return (
-            <li className="mr-2">
+            <li className="mr-2" key={user.id}>
               <a
-                onClick={() => props.setCurrentUser(user)}
+                onClick={() => chatContext?.setCurrentUser(user)}
                 href="#"
                 className={`
                 inline-block 
@@ -25,7 +23,7 @@ const Tabs = (props: TabsProps) => {
                 hover:border-gray-300 
                 dark:hover:text-gray-300
                 ${
-                  props.currentUser === user
+                  chatContext?.currentUser === user
                     ? "active dark:text-blue-500 dark:border-blue-500"
                     : ""
                 }
