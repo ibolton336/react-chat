@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ChatContext, User } from "../App";
+import { ChatContext } from "../App";
 
 const Tabs = () => {
   const chatContext = useContext(ChatContext);
@@ -12,7 +12,6 @@ const Tabs = () => {
             <li className="mr-2" key={user.id}>
               <a
                 onClick={() => chatContext?.setCurrentUser(user)}
-                href="#"
                 className={`
                 inline-block 
                 p-4 

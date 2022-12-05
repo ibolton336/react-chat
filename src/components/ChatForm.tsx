@@ -1,5 +1,9 @@
 import { useContext } from "react";
-import { ChatContext, User } from "../App";
+import { ChatContext } from "../App";
+import dayjs from "dayjs";
+const localizedFormat = require("dayjs/plugin/localizedFormat");
+
+dayjs.extend(localizedFormat);
 
 const ChatForm = () => {
   const chatContext = useContext(ChatContext);
@@ -13,9 +17,15 @@ const ChatForm = () => {
         const value = element.value;
         chatContext?.setUsers((prevState) => {
           if (prevState && chatContext.users) {
-            const updatedUsers = chatContext.users.map((user, index) => {
-              if (user.id === chatContext?.currentUser?.id) {
-                user.messages = [...user.messages, value];
+            const updatedUsers = chatContext.users.map((user) => {
+              if (
+                user.id === chatContext?.currentUser?.id &&
+                element.value !== ""
+              ) {
+                user.messages = [
+                  ...user.messages,
+                  { messageText: value, dateSent: dayjs().format("L LT") },
+                ];
                 return user;
               } else return user;
             });
@@ -25,7 +35,6 @@ const ChatForm = () => {
             return prevState;
           }
         });
-        // document?.getElementById("chat-form")?.reset();
       }}
     >
       <div className="mb-6">
@@ -38,6 +47,7 @@ const ChatForm = () => {
         <input
           type="text"
           id="message"
+          maxLength={140}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Type your message..."
         />
@@ -46,7 +56,7 @@ const ChatForm = () => {
         type="submit"
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        Submit
+        Send
       </button>
     </form>
   );

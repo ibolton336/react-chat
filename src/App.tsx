@@ -9,10 +9,14 @@ import "./App.css";
 import Tabs from "./components/Tabs";
 import ChatForm from "./components/ChatForm";
 import ChatBox from "./components/ChatBox";
+export interface Message {
+  messageText: string;
+  dateSent: string;
+}
 export interface User {
   id: number;
   name: string;
-  messages: Array<String>;
+  messages: Array<Message>;
 }
 interface ChatContextInterface {
   currentUser: User | null;
