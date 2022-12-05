@@ -29,7 +29,8 @@ const ChatBox = () => {
         return (
           <div className="text-zinc-300  mx-1 px-1" key={index}>
             <p className="font-normal text-gray-700 dark:text-gray-400 text-left">
-              {`${message.dateSent}: ${message.messageText} `}
+              <span className="font-semibold">{`${message.dateSent}: `}</span>
+              <span>{message.messageText}</span>
             </p>
           </div>
         );
